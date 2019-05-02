@@ -4,7 +4,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let app = express();
-let server = app.listen(3000);
+let server = app.listen(3001);
 let sio = require('socket.io').listen(server);
 let db = require('./db.js');
 // view engine setup

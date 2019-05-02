@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import socketIOClient from "socket.io-client";
-import "./header.css";
+//import "./header.css";
 
 var socket;
 class Header extends Component {
