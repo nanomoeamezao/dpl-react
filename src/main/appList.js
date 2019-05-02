@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Table, Container } from "reactstrap";
 import { socket } from "../global/header";
+import AppEntry from "./appEntry";
+import { NavLink } from "react-router-dom";
 
 class AppList extends Component{
     constructor(){
@@ -33,6 +35,7 @@ class AppList extends Component{
                     <td>{d.id}</td>
                     <td>{d.name}</td>
                     <td>{d.theme}</td>
+                    <td><NavLink to={'/appentry/'+d.id}>О заявке</NavLink></td>
                 </tr>
             );
         });

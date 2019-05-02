@@ -14,7 +14,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={AppList} />
                     <Route path="/appform" component={AppForm} />
-                    <Route path="/appentry" component={AppEntry} />
+                    <Route path="/appentry/:id" component={AppEntry} />
                 </Switch>
             </div>
         );
