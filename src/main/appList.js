@@ -5,30 +5,54 @@ import { socket } from "../global/header";
 class AppList extends Component{
     constructor(){
         super();
+        this.state = {
+            tableData: []
+        };
     }
 
-    //reqData = ()=> socket.emit("dataRequest");
+    dataUpdate = data =>{
+        this.setState({ tableData: data});
+        console.log("got data from server: ");
+        console.log(data);
+    }
+
     componentDidMount(){
         console.log(" sending request");
         socket.emit("dataRequest");
+        socket.on("dataResponse", this.dataUpdate)
     }
-    // componentWillUnmount(){
-    //
-    // }
 
+    componentWillUnmount(){
+        socket.off("dataResponse");
+    }
+
+    insertData(){
+        return this.state.tableData.map(d=>{
+            return(
+                <tr key={d.id}>
+                    <td>{d.id}</td>
+                    <td>{d.name}</td>
+                    <td>{d.theme}</td>
+                </tr>
+            );
+        });
+    }
     render() {
         return (
             <Container>
-                <table className="data">
-                    <tr>
-                        <th>id</th>
-                        <th>Имя</th>
-                        <th>Тема</th>
-                    </tr>
-                </table>
-
+                <Table className="data">
+                    <thread>
+                        <tr>
+                            <th>id</th>
+                            <th>Имя</th>
+                            <th>Тема</th>
+                        </tr>
+                    </thread>
+                    <tbody>{this.insertData()}</tbody>
+                </Table>
             </Container>
         );
     }
+
 }
 export default AppList;
