@@ -28,8 +28,8 @@ function getTable(callback){
 }
 function insertData(data){
     console.log("inserting data");
-    db.query('INSERT INTO applications (name, theme)  VALUES (?, ?)', [data.name], [data.theme], (err, f)=>{
-        if (error) throw error;
+    var query = db.query('INSERT INTO applications (name, theme) VALUES (?, ?)', [data.name, data.theme], function(err, res, f){
+        if (err) throw error;
     });
 
 }
