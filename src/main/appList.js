@@ -14,7 +14,7 @@ class AppList extends Component{
         this.setState({ tableData: data});
         console.log("got data from server: ");
         console.log(data);
-    }
+    };
 
     componentDidMount(){
         console.log(" sending request");
