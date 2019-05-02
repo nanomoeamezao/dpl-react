@@ -43,6 +43,10 @@ class AppForm extends Component{
         })
     }
 
+    componentWillUnmount(){
+        socket.off("dataSuccess");
+    }
+
     successToggle(){
         this.setState(prevState=> ({successState: !prevState.successState}));
     }

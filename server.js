@@ -30,6 +30,11 @@ sio.on('connect', (socket)=> {
         console.log(data);
         db.insertData(data);
         socket.emit('dataSuccess');
+        db.getTable(function (data) {
+            if(data){
+                sio.emit("dataResponse", data);
+            }
+        });
     })
 
 
