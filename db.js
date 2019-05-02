@@ -34,6 +34,16 @@ function insertData(data){
 
 }
 
+function getApp(id, callback){
+    console.log('getting application by id' + id);
+    db.query("SELECT * FROM applications WHERE id = ?", [id], (err,data,f)=>{
+        if (err) throw err;
+        console.log(data);
+        callback(data);
+    })
+}
+
 module.exports = connectDatabase();
 module.exports.getTable = getTable;
 module.exports.insertData = insertData;
+module.exports.getApp = getApp;
