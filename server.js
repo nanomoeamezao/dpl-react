@@ -24,7 +24,7 @@ sio.on('connect', (socket)=> {
                 socket.emit("dataResponse", data);
             }
         })
-    })
+    });
     socket.on("dataSubmit", data =>{
         console.log('data submission recieved');
         console.log(data);

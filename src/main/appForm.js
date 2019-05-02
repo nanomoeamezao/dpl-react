@@ -41,6 +41,7 @@ class AppForm extends Component{
                 this.successToggle();
             }, 5000);
         })
+        this.setState({name: '', theme: ''});
     }
 
     componentWillUnmount(){
@@ -56,8 +57,8 @@ class AppForm extends Component{
             <Container>
                 <h1>Форма подачи заявки</h1>
                 <form onSubmit={this.onSubmit}>
-                    <input type="text" onChange={this.onNameChange} className="name" placeholder="Имя подающего"/>
-                    <input type="text" onChange={this.onThemeChange} className="theme" placeholder="Тема работы"/>
+                    <input type="text" onChange={this.onNameChange} value={this.state.name} className="name" placeholder="Имя подающего"/>
+                    <input type="text" onChange={this.onThemeChange} value={this.state.theme} className="theme" placeholder="Тема работы"/>
                     <input type="submit" value="Отправить" />
                 </form>
                 {this.state.successState ? <SuccessMsg /> : null}
