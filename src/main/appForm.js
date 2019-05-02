@@ -7,11 +7,13 @@ class AppForm extends Component{
         super();
         this.state = {
             name:"",
-            theme:""
+            theme:"",
+            successMsg:""
         };
         this.onNameChange = this.onNameChange.bind(this);
         this.onThemeChange = this.onThemeChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.successfullyRecieved = this.successfullyRecieved.bind(this);
     }
 
     onNameChange(event){
@@ -20,12 +22,19 @@ class AppForm extends Component{
     onThemeChange(event){
         this.setState({theme: event.target.value});
     }
-    onSubmit(event){
+    onSubmit(){
         let data = {
             name: this.state.name,
             theme: this.state.theme
-        }
-        socket.emit('submitData', data);
+        };
+        socket.emit('dataSubmit', data);
+        socket.on('dataSuccess', ()=>{
+            this.successfullyRecieved();
+        })
+    }
+
+    successfullyRecieved(){
+        this.setState({successMsg: "Успешно отправлено"});
     }
 
     render() {
@@ -37,6 +46,7 @@ class AppForm extends Component{
                     <input type="text" onChange={this.onThemeChange} className="theme" placeholder="Тема работы"/>
                     <input type="submit" value="Отправить" />
                 </form>
+                <p>{this.state.successMsg}</p>
             </Container>
         );
     }

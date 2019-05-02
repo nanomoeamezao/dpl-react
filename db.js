@@ -26,6 +26,14 @@ function getTable(callback){
         callback(data);
     })
 }
+function insertData(data){
+    console.log("inserting data");
+    db.query('INSERT INTO applications (name, theme)  VALUES (?, ?)', [data.name], [data.theme], (err, f)=>{
+        if (error) throw error;
+    });
+
+}
 
 module.exports = connectDatabase();
 module.exports.getTable = getTable;
+module.exports.insertData = insertData;

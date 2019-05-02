@@ -25,6 +25,12 @@ sio.on('connect', (socket)=> {
             }
         })
     })
+    socket.on("dataSubmit", data =>{
+        console.log('data submission recieved');
+        console.log(data);
+        db.insertData(data);
+        socket.emit('dataSuccess');
+    })
 
 
 });
