@@ -4,6 +4,7 @@ import { Header } from "./global/header";
 import { Switch, Route } from "react-router-dom";
 import AppList from "./main/appList";
 import AppForm from "./main/appForm";
+import AppEntry from "./main/appEntry";
 
 class App extends Component {
     render() {
@@ -13,6 +14,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/" component={AppList} />
                     <Route path="/appform" component={AppForm} />
+                    <Route path="/appentry" component={AppEntry} />
                 </Switch>
             </div>
         );

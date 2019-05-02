@@ -23,6 +23,9 @@ class Header extends Component {
                         <li>
                             <NavLink to="/appform">Подать заявку</NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/appentry">Заявка</NavLink>
+                        </li>
                     </ul>
                 </nav>
             </header>
