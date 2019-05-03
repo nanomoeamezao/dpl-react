@@ -31,18 +31,6 @@ class AppEntry extends Component{
         socket.off("resApp");
     }
 
-    /*insertApplication(){
-        return(
-            <div>
-                <p> Имя участника: {this.state.name} </p>
-                <p> Тема работы: {this.state.theme} </p>
-                <p> ID работы: {this.state.id} </p>
-                <p> Статус работы: {this.state.status}</p>
-            </div>
-
-        );
-    }*/
-
     render() {
         var d=this.state;
         return (
