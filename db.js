@@ -43,7 +43,15 @@ function getApp(id, callback){
     })
 }
 
+function updateStatus(data){
+    console.log('updating data for id: '+data.id);
+    db.query("UPDATE application SET status = ? WHERE id = ?", [data.status, data.id], (err, res, f)=>{
+        if (err) throw error;
+    });
+}
+
 module.exports = connectDatabase();
 module.exports.getTable = getTable;
 module.exports.insertData = insertData;
 module.exports.getApp = getApp;
+module.exports.updateStatus = updateStatus;

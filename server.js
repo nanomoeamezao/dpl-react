@@ -42,6 +42,11 @@ sio.on('connect', (socket)=> {
             if(data)
                 socket.emit("resApp", data);
         })
+    });
+    socket.on("updateStatus", msg=>{
+        console.log('recieved status update for an entry with id: '+ msg.id);
+        db.updateStatus(msg);
+        sio.emit("statusUpdated", msg);
     })
 
 
