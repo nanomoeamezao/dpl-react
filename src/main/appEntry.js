@@ -60,8 +60,20 @@ class Application extends Component{
             status: event.target.value
         };
         socket.emit("updateStatus", msg);
+        this.setStatus(msg);
         console.log("status update sent");
     };
+    setStatus = data =>{
+        console.log("recieved status update for id: "+ data.id);
+        if(this.state.id == data.id)
+        this.setState({status: data.status});
+    };
+    componentDidMount(){
+        socket.on("statusUpdated", this.setStatus);
+    }
+    componentWillUnmount(){
+        socket.off("statusUpdated");
+    }
     render(){
         return(
             <Container>
@@ -70,9 +82,9 @@ class Application extends Component{
                     <p> Тема работы: {this.state.theme} </p>
                     <p> ID работы: {this.state.id} </p>
                     <p> Статус работы:
-                        <select onChange={this.updateStatus} size="1">
-                            <option selected  value={this.state.status}>{this.state.status}</option>
-                            <option value={this.state.status=='not approved' ? 'approved' : 'approved'}>{this.state.status=='approved' ? 'not approved' : 'approved'}</option>
+                        <select onChange={this.updateStatus} value={this.state.status} size="1">
+                            <option value="approved">approved</option>
+                            <option value='not approved'>not approved</option>
                         </select>
                     </p>
                 </div>

@@ -18,10 +18,11 @@ class AppList extends Component{
         console.log(data);
     };
 
+
     componentDidMount(){
         console.log(" sending request");
         socket.emit("dataRequest");
-        socket.on("dataResponse", this.dataUpdate)
+        socket.on("dataResponse", this.dataUpdate);
     }
 
     componentWillUnmount(){

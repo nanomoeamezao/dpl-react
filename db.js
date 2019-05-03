@@ -29,7 +29,7 @@ function getTable(callback){
 function insertData(data){
     console.log("inserting data");
     var query = db.query('INSERT INTO applications (name, theme) VALUES (?, ?)', [data.name, data.theme], function(err, res, f){
-        if (err) throw error;
+        if (err) throw err;
     });
 
 }
@@ -44,9 +44,9 @@ function getApp(id, callback){
 }
 
 function updateStatus(data){
-    console.log('updating data for id: '+data.id);
-    db.query("UPDATE application SET status = ? WHERE id = ?", [data.status, data.id], (err, res, f)=>{
-        if (err) throw error;
+    console.log('updating data for id: '+data.id + ' with ' + data.status);
+    db.query("UPDATE applications SET status = ? WHERE id = ?", [data.status, data.id], (err, res, f)=>{
+        if (err) throw err;
     });
 }
 

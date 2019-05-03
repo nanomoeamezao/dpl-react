@@ -44,9 +44,14 @@ sio.on('connect', (socket)=> {
         })
     });
     socket.on("updateStatus", msg=>{
-        console.log('recieved status update for an entry with id: '+ msg.id);
+        console.log('recieved status update for an entry id: '+ msg.id);
         db.updateStatus(msg);
-        sio.emit("statusUpdated", msg);
+        db.getTable(function (data) {
+            if(data){
+                sio.emit("dataResponse", data);
+            }
+        });
+        sio.emit("statusUpdated", msg)
     })
 
 
