@@ -35,11 +35,15 @@ function insertData(data){
 }
 
 function getApp(id, callback){
-    console.log('getting application by id' + id);
+    console.log('getting application by id ' + id);
     db.query("SELECT * FROM applications WHERE id = ?", [id], (err,data,f)=>{
         if (err) throw err;
         console.log(data);
-        callback(data);
+        console.log('getting log for id ' + id);
+        db.query("SELECT message, date FROM logs WHERE id = ?", [id], (err, logs, f)=>{
+            callback([data, logs]);
+        });
+
     })
 }
 

@@ -3,6 +3,17 @@ import { Button, Table, Container } from "reactstrap";
 import { socket } from "../global/header";
 
 
+function AppLog(props) {
+    return props.data.map(d=>{
+            return(
+                <tr>
+                    <td>{d.message}</td>
+                    <td>{d.date}</td>
+                </tr>
+            )
+        });
+}
+
 class AppEntry extends Component{
     constructor(props){
         super(props);
@@ -10,15 +21,16 @@ class AppEntry extends Component{
             id:'',
             name:'',
             theme:'',
-            status:''
+            status:'',
+            logs: []
         };
     }
 
 
     loadApp = data=>{
-        this.setState({id: data[0].id, name: data[0].name, theme: data[0].theme, status: data[0].status});
-        console.log("recieved application data, testing new state: " + this.state.name);
-        console.log(data[0]);
+        this.setState({id: data[0][0].id, name: data[0][0].name, theme: data[0][0].theme, status: data[0][0].status, logs: data[1]});
+        console.log("recieved application data, testing new state: ");
+        console.log(this.state.logs);
     };
 
     componentDidMount(props){
@@ -38,6 +50,15 @@ class AppEntry extends Component{
                 <div>
                     <h1>TESTING PROPS {this.props.match.params.id} </h1>
                     {this.state.id!='' ? <Application data={d}/> : null}
+                </div>
+                <div>
+                    <Table>
+                        <tr>
+                            <th>Сообщение</th>
+                            <th>Дата</th>
+                        </tr>
+                        {this.state.logs ? <AppLog data={this.state.logs}/> : null}
+                    </Table>
                 </div>
             </Container>
         );

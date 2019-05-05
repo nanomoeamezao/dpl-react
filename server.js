@@ -40,6 +40,7 @@ sio.on('connect', (socket)=> {
         console.log('application request recieved');
         db.getApp(id, (data)=>{
             if(data)
+                console.log(data);
                 socket.emit("resApp", data);
         })
     });
