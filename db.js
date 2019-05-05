@@ -30,6 +30,11 @@ function insertData(data){
     console.log("inserting data");
     var query = db.query('INSERT INTO applications (name, theme) VALUES (?, ?)', [data.name, data.theme], function(err, res, f){
         if (err) throw err;
+        console.log(res);
+        var d = new Date();
+        var query2 = db.query("INSERT INTO logs VALUES (?, ?, ?)", [res.insertId, "Заявка добавлена", d], function(error, ress, f1){
+            if (err) throw err;
+        })
     });
 
 }

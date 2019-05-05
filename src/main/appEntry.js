@@ -5,10 +5,11 @@ import { socket } from "../global/header";
 
 function AppLog(props) {
     return props.data.map(d=>{
+        var time = d.date.toString().slice(0,16);
             return(
                 <tr>
                     <td>{d.message}</td>
-                    <td>{d.date}</td>
+                    <td>{time}</td>
                 </tr>
             )
         });
