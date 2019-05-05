@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 sio.on('connect', (socket)=> {
     socket.on("dataRequest", function () {
-        console.log("successful request recieved");
+        console.log("recieved dataRequest");
         db.getTable(function (data) {
             if(data){
                 socket.emit("dataResponse", data);
@@ -26,7 +26,7 @@ sio.on('connect', (socket)=> {
         })
     });
     socket.on("dataSubmit", data =>{
-        console.log('data submission recieved');
+        console.log('recieved dataSubmit');
         console.log(data);
         db.insertData(data);
         socket.emit('dataSuccess');
@@ -37,7 +37,7 @@ sio.on('connect', (socket)=> {
         });
     });
     socket.on("reqApp", id => {
-        console.log('application request recieved');
+        console.log('recieved reqApp with id: ' +id);
         db.getApp(id, (data)=>{
             if(data)
                 console.log(data);
@@ -45,14 +45,14 @@ sio.on('connect', (socket)=> {
         })
     });
     socket.on("updateStatus", msg=>{
-        console.log('recieved status update for an entry id: '+ msg.id);
+        console.log('recieved updateStatus, id: '+ msg.id);
         db.updateStatus(msg);
-        /*db.getTable(function (data) {
-            if(data){
-                sio.emit("dataResponse", data);
-            }
-        });*/
-        sio.emit("statusUpdated", msg)
+        db.insertLog(msg);
+        sio.emit("statusUpdated", msg);
+        db.getLogs(msg.id, data=>{
+            console.log("got logs for id " + msg.id);
+            sio.emit("logsUpdate", data);
+        })
     })
 
 

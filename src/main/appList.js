@@ -36,6 +36,7 @@ class AppList extends Component{
 
     componentWillUnmount(){
         socket.off("dataResponse");
+        socket.off('statusUpdated');
     }
 
     insertData(){

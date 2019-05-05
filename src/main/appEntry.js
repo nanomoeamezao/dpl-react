@@ -3,18 +3,6 @@ import { Button, Table, Container } from "reactstrap";
 import { socket } from "../global/header";
 
 
-function AppLog(props) {
-    return props.data.map(d=>{
-        var time = d.date.toString().slice(0,16);
-            return(
-                <tr>
-                    <td>{d.message}</td>
-                    <td>{time}</td>
-                </tr>
-            )
-        });
-}
-
 class AppEntry extends Component{
     constructor(props){
         super(props);
@@ -34,14 +22,33 @@ class AppEntry extends Component{
         console.log(this.state.logs);
     };
 
-    componentDidMount(props){
+    logsUpdate = data =>{
+        this.setState({logs: data});
+        console.log("logs updated");
+    };
+
+        componentDidMount(props){
         socket.emit("reqApp", this.props.match.params.id);
         console.log("sending applications request with id: "+ this.props.match.params.id);
-        socket.on("resApp", this.loadApp)
+        socket.on("resApp", this.loadApp);
+        socket.on("logsUpdate", this.logsUpdate);
     }
 
     componentWillUnmount(){
         socket.off("resApp");
+       socket.off("logsUpdate");
+    }
+
+    logsInsert(){
+        return this.state.logs.map(d=>{
+            var time = d.date.toString().slice(0,16);
+            return(
+                <tr>
+                    <td>{d.message}</td>
+                    <td>{time}</td>
+                </tr>
+            )
+        });
     }
 
     render() {
@@ -58,7 +65,7 @@ class AppEntry extends Component{
                             <th>Сообщение</th>
                             <th>Дата</th>
                         </tr>
-                        {this.state.logs ? <AppLog data={this.state.logs}/> : null}
+                        {this.logsInsert()}
                     </Table>
                 </div>
             </Container>
@@ -86,7 +93,7 @@ class Application extends Component{
         console.log("status update sent");
     };
     setStatus = data =>{
-        console.log("recieved status update for id: "+ data.id);
+        console.log("status update");
         if(this.state.id == data.id)
         this.setState({status: data.status});
     };
