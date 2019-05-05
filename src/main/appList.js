@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, Table, Container } from "reactstrap";
 import { socket } from "../global/header";
-import AppEntry from "./appEntry";
 import { NavLink } from "react-router-dom";
+import update from 'immutability-helper';
 
 class AppList extends Component{
     constructor(){
@@ -19,10 +19,19 @@ class AppList extends Component{
     };
 
 
+    statusUpdate = data=>{
+        const id = data.id;
+        const stsUpd = update(this.state.tableData, {[id-1]: {status: {$set: data.status}}});
+        console.log(data);
+        this.setState({tableData: stsUpd});
+
+    };
+
     componentDidMount(){
         console.log(" sending request");
         socket.emit("dataRequest");
         socket.on("dataResponse", this.dataUpdate);
+        socket.on('statusUpdated', this.statusUpdate);
     }
 
     componentWillUnmount(){
@@ -36,6 +45,7 @@ class AppList extends Component{
                     <td>{d.id}</td>
                     <td>{d.name}</td>
                     <td>{d.theme}</td>
+                    <td>{d.status}</td>
                     <td><NavLink to={'/appentry/'+d.id}>О заявке</NavLink></td>
                 </tr>
             );
