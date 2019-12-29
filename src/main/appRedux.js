@@ -1,14 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
-const mapStateToProps = state => {
-  return { test: state.test };
-};
-const ConnectedList = ({ test }) => (
-  <ul>
-    {test.map(el => (
-      <li key={el.id}>{el.title}</li>
-    ))}
-  </ul>
+import TestList from "./testList";
+import Form from "./testForm";
+const appRedux = () => (
+    <div>
+      <p>redux component</p>
+      <TestList />
+      <Form />
+    </div>
 );
-const appRedux = connect(mapStateToProps)(ConnectedList);
-export default appRedux; 
+export default appRedux;

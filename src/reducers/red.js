@@ -2,17 +2,17 @@ import update from "immutability-helper";
 
 const initialState = {
   test: [
-    { title: "hyperomegatest", id: 1 },
-    { title: "not-so-giga-test", id: 2 }
+    { title: "hyperomegatest" },
+    { title: "not-so-giga-test" }
   ]
 };
 function rootReducer(state = initialState, action) {
-  if (action.type === "set") {
-    return update(state.test, { $push: action.payload });
+  if (action.type === "push") {
+    return Object.assign({}, state, {test: state.test.concat(action.payload)})
   }
   return state;
 }
 export default rootReducer;
-export function setTest(payload) {
-  return { type: "set", payload };
+export function pushTest(payload) {
+  return { type: "push", payload };
 }
