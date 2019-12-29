@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Container } from "reactstrap";
+import {  Table, Container, Input , ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from "reactstrap";
 import { socket } from "../global/header";
 
 
@@ -36,7 +36,7 @@ class AppEntry extends Component{
 
     componentWillUnmount(){
         socket.off("resApp");
-       socket.off("logsUpdate");
+        socket.off("logsUpdate");
     }
 
     logsInsert(){
@@ -56,15 +56,17 @@ class AppEntry extends Component{
         return (
             <Container>
                 <div>
-                    <h1>TESTING PROPS {this.props.match.params.id} </h1>
+                    <h2>Заявка с кодом {this.props.match.params.id} </h2>
                     {this.state.id!='' ? <Application data={d}/> : null}
                 </div>
                 <div>
                     <Table>
-                        <tr>
-                            <th>Сообщение</th>
-                            <th>Дата</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Сообщение</th>
+                                <th>Дата</th>
+                            </tr>
+                        </thead>
                         {this.logsInsert()}
                     </Table>
                 </div>
@@ -107,15 +109,29 @@ class Application extends Component{
         return(
             <Container>
                 <div>
-                    <p> Имя участника: {this.state.name} </p>
-                    <p> Тема работы: {this.state.theme} </p>
-                    <p> ID работы: {this.state.id} </p>
-                    <p> Статус работы:
-                        <select onChange={this.updateStatus} value={this.state.status} size="1">
-                            <option value="approved">approved</option>
-                            <option value='not approved'>not approved</option>
-                        </select>
-                    </p>
+                    <ListGroup>
+                        <ListGroupItem>
+                            <ListGroupItemHeading>Имя участника:</ListGroupItemHeading>
+                            <ListGroupItemText>{this.state.name} </ListGroupItemText>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                            <ListGroupItemHeading>Тема работы:</ListGroupItemHeading>
+                            <ListGroupItemText>{this.state.theme} </ListGroupItemText>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                            <ListGroupItemHeading>ID работы:</ListGroupItemHeading>
+                            <ListGroupItemText>{this.state.id}</ListGroupItemText>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                            <ListGroupItemHeading>Статус работы:</ListGroupItemHeading>
+                            <ListGroupItemText>
+                                <Input type="select" name="select" onChange={this.updateStatus} value={this.state.status} size="1">
+                                    <option value="approved">approved</option>
+                                    <option value='not approved'>not approved</option>
+                                </Input>
+                            </ListGroupItemText>
+                        </ListGroupItem>
+                    </ListGroup>
                 </div>
             </Container>
         )

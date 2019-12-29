@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import socketIOClient from "socket.io-client";
-//import "./header.css";
+import { Navbar, Nav, NavItem } from "reactstrap";
 
 var socket;
 class Header extends Component {
@@ -15,16 +15,17 @@ class Header extends Component {
     render() {
         return (
             <header>
-                <nav>
-                    <ul className="NavClass">
-                        <li>
-                            <NavLink exact to="/">Список заявок</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/appform">Подать заявку</NavLink>
-                        </li>
-                    </ul>
-                </nav>
+                <h1>Гагаринские чтения</h1>
+                <Navbar color="light" light expand="md">
+                    <Nav pills>
+                        <NavItem>
+                            <NavLink exact to="/" className="nav-link">Список заявок</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink to="/appform" className="nav-link">Подать заявку</NavLink>
+                        </NavItem>
+                    </Nav>
+                </Navbar>
             </header>
         );
     }

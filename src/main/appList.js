@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Container } from "reactstrap";
+import { Table, Container } from "reactstrap";
 import { socket } from "../global/header";
 import { NavLink } from "react-router-dom";
 import update from 'immutability-helper';
@@ -55,15 +55,19 @@ class AppList extends Component{
     render() {
         return (
             <Container>
-                <Table className="data">
-                    <thread>
+                <Table className="data" striped bordered >
+                    <thead>
                         <tr>
                             <th>id</th>
                             <th>Имя</th>
                             <th>Тема</th>
+                            <th>Статус</th>
+                            <th> </th>
                         </tr>
-                    </thread>
-                    <tbody>{this.insertData()}</tbody>
+                    </thead>
+                    <tbody>
+                        {this.insertData()}
+                    </tbody>
                 </Table>
             </Container>
         );

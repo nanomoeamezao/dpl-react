@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Container } from "reactstrap";
+import { Button, Table, Container, Form, FormGroup, Label, Input } from "reactstrap";
 import { socket } from "../global/header";
 
 function SuccessMsg() {
@@ -56,11 +56,17 @@ class AppForm extends Component{
         return (
             <Container>
                 <h1>Форма подачи заявки</h1>
-                <form onSubmit={this.onSubmit}>
-                    <input type="text" onChange={this.onNameChange} value={this.state.name} className="name" placeholder="Имя подающего"/>
-                    <input type="text" onChange={this.onThemeChange} value={this.state.theme} className="theme" placeholder="Тема работы"/>
-                    <input type="submit" value="Отправить" />
-                </form>
+                <Form onSubmit={this.onSubmit}>
+                    <FormGroup>
+                        <Label for="name">Имя подающего</Label>
+                        <Input type="text" onChange={this.onNameChange} value={this.state.name} className="name" id="name"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="theme">Тема работы</Label>
+                        <Input type="text" onChange={this.onThemeChange} value={this.state.theme} className="theme" placeholder="Тема работы" id="theme"/>
+                    </FormGroup>
+                    <Input type="submit" value="Отправить" />
+                </Form>
                 {this.state.successState ? <SuccessMsg /> : null}
             </Container>
         );

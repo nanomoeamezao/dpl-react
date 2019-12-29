@@ -14,6 +14,14 @@ function connectDatabase() {
                 console.log('Error connecting database!');
             }
         });
+        var query = db.query("CREATE TABLE IF NOT EXISTS applications(id int NOT NULL PRIMARY KEY, name VARCHAR(45), theme VARCHAR(45), status VARCHAR(45) DEFAULT ? )",['not approved'], (err, res, f)=>{
+            if (err) throw err;
+            console.log("table applications created");
+        });
+        var query2 = db.query("CREATE TABLE IF NOT EXISTS logs(id int, message VARCHAR(45), date VARCHAR(45))", (err, res, f)=>{
+            if (err) throw err;
+            console.log("table logs created");
+        });
     }
     return db;
 }
