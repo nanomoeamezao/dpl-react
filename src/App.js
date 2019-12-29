@@ -3,6 +3,7 @@ import "./App.css";
 import { Header } from "./global/header";
 import { Switch, Route } from "react-router-dom";
 import AppList from "./main/appList";
+import AppRedux from "./main/appRedux";
 import AppForm from "./main/appForm";
 import AppEntry from "./main/appEntry";
 
@@ -12,6 +13,7 @@ class App extends Component {
             <div className="App">
                 <Header />
                 <Switch>
+                    <Route path="/test" component={AppRedux} />
                     <Route exact path="/" component={AppList} />
                     <Route path="/appform" component={AppForm} />
                     <Route path="/appentry/:id" component={AppEntry} />

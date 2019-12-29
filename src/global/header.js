@@ -24,6 +24,9 @@ class Header extends Component {
                         <NavItem>
                             <NavLink to="/appform" className="nav-link">Подать заявку</NavLink>
                         </NavItem>
+                        <NavItem>
+                            <NavLink to="/test" className="nav-link">test</NavLink>
+                        </NavItem>
                     </Nav>
                 </Navbar>
             </header>
