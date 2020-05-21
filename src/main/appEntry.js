@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import {  Table, Container, Input , ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from "reactstrap";
 import { socket } from "../global/header";
+import { entryPush } from "../reducers/red";
+import { connect } from "react-redux";
+const mapDispatchToProps = dispatch =>{
+        return {
+            entryPush: testPayload => dispatch(entryPush(testPayload))
+        }
+    }
 
-
-class AppEntry extends Component{
+class ConnectedAppEntry extends Component{
     constructor(props){
         super(props);
         this.state ={
@@ -15,11 +21,11 @@ class AppEntry extends Component{
         };
     }
 
-
+    
     loadApp = data=>{
         this.setState({id: data[0][0].id, name: data[0][0].name, theme: data[0][0].theme, status: data[0][0].status, logs: data[1]});
-        console.log("recieved application data, testing new state: ");
-        console.log(this.state.logs);
+        const st = {id: this.state.id, name: this.state.name, theme: this.state.theme, status: this.state.status};
+        this.props.entryPush(st)
     };
 
     logsUpdate = data =>{
@@ -27,7 +33,7 @@ class AppEntry extends Component{
         console.log("logs updated");
     };
 
-        componentDidMount(props){
+    componentDidMount(props){
         socket.emit("reqApp", this.props.match.params.id);
         console.log("sending applications request with id: "+ this.props.match.params.id);
         socket.on("resApp", this.loadApp);
@@ -52,12 +58,11 @@ class AppEntry extends Component{
     }
 
     render() {
-        var d=this.state;
         return (
             <Container>
                 <div>
                     <h2>Заявка с кодом {this.props.match.params.id} </h2>
-                    {this.state.id!='' ? <Application data={d}/> : null}
+                    {this.state.id!='' ? <Application/> : null}
                 </div>
                 <div>
                     <Table>
@@ -74,15 +79,17 @@ class AppEntry extends Component{
         );
     }
 }
-
-class Application extends Component{
+const mapStateToProps = state => {
+  return { state };
+};
+class ConApplication extends Component{
     constructor(props){
         super(props);
         this.state ={
-            id: props.data.id,
-            name: props.data.name,
-            theme: props.data.theme,
-            status: props.data.status
+            id: "",
+            name: "",
+            theme: "",
+            status: ""
         };
     }
     updateStatus= event => {
@@ -101,6 +108,7 @@ class Application extends Component{
     };
     componentDidMount(){
         socket.on("statusUpdated", this.setStatus);
+        this.setState({ id: this.props.state.id, name: this.props.state.name, status: this.props.state.status, theme: this.props.state.theme})
     }
     componentWillUnmount(){
         socket.off("statusUpdated");
@@ -137,5 +145,6 @@ class Application extends Component{
         )
     }
 }
-
+const Application = connect(mapStateToProps)(ConApplication)
+const AppEntry = connect(null, mapDispatchToProps)(ConnectedAppEntry);
 export default AppEntry;
