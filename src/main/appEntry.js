@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import {  Table, Container, Input , ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from "reactstrap";
 import { socket } from "../global/header";
-import { entryPush } from "../reducers/red";
+import { entryPush, statUpd } from "../reducers/red";
 import { connect } from "react-redux";
 const mapDispatchToProps = dispatch =>{
         return {
-            entryPush: testPayload => dispatch(entryPush(testPayload))
+            entryPush: testPayload => dispatch(entryPush(testPayload)),
+            statUpd: pl => dispatch(statUpd(pl))
+
         }
     }
 
@@ -83,32 +85,17 @@ const mapStateToProps = state => {
   return { state };
 };
 class ConApplication extends Component{
-    constructor(props){
-        super(props);
-        this.state ={
-            id: "",
-            name: "",
-            theme: "",
-            status: ""
-        };
-    }
     updateStatus= event => {
         var msg = {
-            id: this.state.id,
+            id: this.props.state.id,
             status: event.target.value
         };
         socket.emit("updateStatus", msg);
-        this.setStatus(msg);
         console.log("status update sent");
-    };
-    setStatus = data =>{
-        console.log("status update");
-        if(this.state.id == data.id)
-        this.setState({status: data.status});
+        this.props.statUpd({ id: msg.id, name: this.props.state.name, status: msg.status, theme: this.props.state.theme} )
     };
     componentDidMount(){
         socket.on("statusUpdated", this.setStatus);
-        this.setState({ id: this.props.state.id, name: this.props.state.name, status: this.props.state.status, theme: this.props.state.theme})
     }
     componentWillUnmount(){
         socket.off("statusUpdated");
@@ -120,20 +107,20 @@ class ConApplication extends Component{
                     <ListGroup>
                         <ListGroupItem>
                             <ListGroupItemHeading>Имя участника:</ListGroupItemHeading>
-                            <ListGroupItemText>{this.state.name} </ListGroupItemText>
+                            <ListGroupItemText>{this.props.state.name} </ListGroupItemText>
                         </ListGroupItem>
                         <ListGroupItem>
                             <ListGroupItemHeading>Тема работы:</ListGroupItemHeading>
-                            <ListGroupItemText>{this.state.theme} </ListGroupItemText>
+                            <ListGroupItemText>{this.props.state.theme} </ListGroupItemText>
                         </ListGroupItem>
                         <ListGroupItem>
                             <ListGroupItemHeading>ID работы:</ListGroupItemHeading>
-                            <ListGroupItemText>{this.state.id}</ListGroupItemText>
+                            <ListGroupItemText>{this.props.state.id}</ListGroupItemText>
                         </ListGroupItem>
                         <ListGroupItem>
                             <ListGroupItemHeading>Статус работы:</ListGroupItemHeading>
                             <ListGroupItemText>
-                                <Input type="select" name="select" onChange={this.updateStatus} value={this.state.status} size="1">
+                                <Input type="select" name="select" onChange={this.updateStatus} value={this.props.state.status} size="1">
                                     <option value="approved">approved</option>
                                     <option value='not approved'>not approved</option>
                                 </Input>
@@ -145,6 +132,6 @@ class ConApplication extends Component{
         )
     }
 }
-const Application = connect(mapStateToProps)(ConApplication)
+const Application = connect(mapStateToProps, mapDispatchToProps)(ConApplication)
 const AppEntry = connect(null, mapDispatchToProps)(ConnectedAppEntry);
 export default AppEntry;

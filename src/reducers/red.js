@@ -10,7 +10,6 @@ const initialState = {
     name:"",
     theme:"",
     status:"",
-    logs:[]
   }
 
 };
@@ -19,6 +18,10 @@ function rootReducer(state = initialState, action) {
     return Object.assign({}, state, {test: state.test.concat(action.payload)})
   }
   if (action.type === "enPush"){
+    return action.payload
+  }
+  if (action.type === "statUpd"){
+    console.log(action.payload)
     return action.payload
   }
   return state;
@@ -30,4 +33,7 @@ export function pushTest(payload) {
 }
 export function entryPush(payload){
   return { type: "enPush", payload}
+}
+export function statUpd(payload){
+  return { type: "statUpd", payload}
 }
