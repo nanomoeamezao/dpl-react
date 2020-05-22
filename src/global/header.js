@@ -10,7 +10,7 @@ class Header extends Component {
         this.state = {
             endpoint: 'http://localhost:3001/'
         };
-        socket = socketIOClient(this.state.endpoint);
+        socket = socketIOClient();
     }
     render() {
         return (
