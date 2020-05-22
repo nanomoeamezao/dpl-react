@@ -1,7 +1,6 @@
 let mysql = require('mysql');
 let db_settings = require('./hosts/db_settings.json');
-let active = require('./hosts/active.json');
-let settings= db_settings[active.active];
+let settings=  process.env.CLEARDB_DATABASE_URL  || db_settings["local"];
 let db;
 
 function connectDatabase() {
@@ -16,21 +15,17 @@ function connectDatabase() {
         });
         var query = db.query("CREATE TABLE IF NOT EXISTS applications(id int NOT NULL PRIMARY KEY, name VARCHAR(45), theme VARCHAR(45), status VARCHAR(45) DEFAULT ? )",['not approved'], (err, res, f)=>{
             if (err) throw err;
-            console.log("table applications created");
         });
         var query2 = db.query("CREATE TABLE IF NOT EXISTS logs(id int, message VARCHAR(45), date VARCHAR(45))", (err, res, f)=>{
             if (err) throw err;
-            console.log("table logs created");
         });
     }
     return db;
 }
 
 function getTable(callback){
-    console.log('called getTable');
     db.query('SELECT * FROM applications', function (err, data, f) {
         if (err) throw err;
-        console.log(data);
         callback(data);
     })
 }
@@ -63,7 +58,6 @@ function getApp(id, callback){
     console.log('called getApp by id ' + id);
     db.query("SELECT * FROM applications WHERE id = ?", [id], (err,data,f)=>{
         if (err) throw err;
-        console.log(data);
         console.log('getting log for id from getapp' + id);
         db.query("SELECT message, date FROM logs WHERE id = ?", [id], (err, logs, f)=>{
             callback([data, logs]);
