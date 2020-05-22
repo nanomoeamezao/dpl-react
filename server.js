@@ -6,15 +6,17 @@ let logger = require('morgan');
 let app = express();
 let db = require('./db.js');
 // view engine setup
+const port = process.env.PORT || 3001;
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-let server = app.listen(3001);
+let server = app.listen(port);
+app.use(express.static(__dirname));
 let sio = require('socket.io').listen(server);
+
 
 sio.on('connect', (socket)=> {
     socket.on("dataRequest", function () {
