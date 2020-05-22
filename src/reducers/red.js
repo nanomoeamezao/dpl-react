@@ -1,33 +1,35 @@
 import update from "immutability-helper";
+import {combineReducers} from 'redux'
 
-const initialState = {
-  test: [
-    { title: "hyperomegatest" },
-    { title: "not-so-giga-test" }
-  ],
-  app: {
+
+const appReducer = (state = {
     id:"",
     name:"",
     theme:"",
     status:"",
+  }, action ) =>{
+    console.log(action)
+    switch (action.type){
+      case 'enPush':
+        return action.payload
+      case 'statUpd':
+        return action.payload
+      default:
+        return state
+    }
   }
-
-};
-function rootReducer(state = initialState, action) {
-  if (action.type === "push") {
+  
+const testReducer = (state = {test: [{ title: "hyperomegatest" }, { title: "hyperomegatest2" }]}, action)=>{
+  if (action.type === 'push'){
     return Object.assign({}, state, {test: state.test.concat(action.payload)})
   }
-  if (action.type === "enPush"){
-    return action.payload
-  }
-  if (action.type === "statUpd"){
-    console.log(action.payload)
-    return action.payload
-  }
-  return state;
+  else
+    return state
 }
 
-export default rootReducer;
+const rootReducer = combineReducers({appReducer, testReducer})
+
+export default rootReducer
 export function pushTest(payload) {
   return { type: "push", payload };
 }

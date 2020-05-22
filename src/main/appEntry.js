@@ -32,12 +32,10 @@ class ConnectedAppEntry extends Component{
 
     logsUpdate = data =>{
         this.setState({logs: data});
-        console.log("logs updated");
     };
 
     componentDidMount(props){
         socket.emit("reqApp", this.props.match.params.id);
-        console.log("sending applications request with id: "+ this.props.match.params.id);
         socket.on("resApp", this.loadApp);
         socket.on("logsUpdate", this.logsUpdate);
     }
@@ -82,17 +80,16 @@ class ConnectedAppEntry extends Component{
     }
 }
 const mapStateToProps = state => {
-  return { state };
+  return  state.appReducer;
 };
 class ConApplication extends Component{
     updateStatus= event => {
         var msg = {
-            id: this.props.state.id,
+            id: this.props.id,
             status: event.target.value
         };
         socket.emit("updateStatus", msg);
-        console.log("status update sent");
-        this.props.statUpd({ id: msg.id, name: this.props.state.name, status: msg.status, theme: this.props.state.theme} )
+        this.props.statUpd({ id: msg.id, name: this.props.name, status: msg.status, theme: this.props.theme} )
     };
     componentDidMount(){
         socket.on("statusUpdated", this.setStatus);
@@ -107,20 +104,20 @@ class ConApplication extends Component{
                     <ListGroup>
                         <ListGroupItem>
                             <ListGroupItemHeading>Имя участника:</ListGroupItemHeading>
-                            <ListGroupItemText>{this.props.state.name} </ListGroupItemText>
+                            <ListGroupItemText>{this.props.name} </ListGroupItemText>
                         </ListGroupItem>
                         <ListGroupItem>
                             <ListGroupItemHeading>Тема работы:</ListGroupItemHeading>
-                            <ListGroupItemText>{this.props.state.theme} </ListGroupItemText>
+                            <ListGroupItemText>{this.props.theme} </ListGroupItemText>
                         </ListGroupItem>
                         <ListGroupItem>
                             <ListGroupItemHeading>ID работы:</ListGroupItemHeading>
-                            <ListGroupItemText>{this.props.state.id}</ListGroupItemText>
+                            <ListGroupItemText>{this.props.id}</ListGroupItemText>
                         </ListGroupItem>
                         <ListGroupItem>
                             <ListGroupItemHeading>Статус работы:</ListGroupItemHeading>
                             <ListGroupItemText>
-                                <Input type="select" name="select" onChange={this.updateStatus} value={this.props.state.status} size="1">
+                                <Input type="select" name="select" onChange={this.updateStatus} value={this.props.status} size="1">
                                     <option value="approved">approved</option>
                                     <option value='not approved'>not approved</option>
                                 </Input>

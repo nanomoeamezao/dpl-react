@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 const mapStateToProps = state => {
-  return { test: state.test };
+  console.log(state)
+  return { test: state.testReducer.test };
 };
 const ConnectedList = ({ test }) => (
   <div>
