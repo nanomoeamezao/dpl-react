@@ -19,13 +19,13 @@ module.exports = new PassportLocalStrategy(
 
         // find a user by email address
         return db.getUser(userData.email, (err, user) => {
-            console.log(user.password);
-            console.log(userData.password);
+            console.log(user);
+            console.log(userData);
             if (err) {
                 return done(err);
             }
 
-            if (!user.name) {
+            if (!user) {
                 const error = new Error("Incorrect email or password");
                 error.name = "IncorrectCredentialsError";
                 return done(error);
