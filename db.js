@@ -1,6 +1,6 @@
 let mysql = require('mysql');
 let db_settings = require('./hosts/db_settings.json');
-let settings=  process.env.CLEARDB_DATABASE_URL  || db_settings["local"];
+let settings=  process.env.JAWSDB_URL || db_settings["local"];
 let db;
 
 function connectDatabase() {
