@@ -22,6 +22,12 @@ function connectDatabase() {
         var query3 = db.query("CREATE TABLE IF NOT EXISTS users(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(45), password VARCHAR(45))", (err, res, f)=>{
             if (err) throw err;
         });
+        db.query('SELECT * FROM users', (err, data, f) => {
+            if (!data[0]){
+                console.log("no users, inserting awd")
+                db.query('INSERT INTO users VALUES(1, "awd", "awd")', (err)=>{if (err) throw err;})
+            }
+        })
     }
     return db;
 }
