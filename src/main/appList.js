@@ -5,8 +5,8 @@ import { NavLink } from "react-router-dom";
 import update from 'immutability-helper';
 
 class AppList extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             tableData: []
         };

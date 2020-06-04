@@ -27,11 +27,22 @@ const testReducer = (state = {test: [{ title: "hyperomegatest" }, { title: "hype
     return state
 }
 
-const rootReducer = combineReducers({appReducer, testReducer})
+const authReducer = (state = {authenticated: false}, action)=>{
+  if (action.type === 'updAuth'){
+    return state = action.payload
+  }
+  else return state
+}
+
+const rootReducer = combineReducers({appReducer, testReducer, authReducer})
 
 export default rootReducer
 export function pushTest(payload) {
   return { type: "push", payload };
+}
+
+export function updAuth(payload){
+  return { type: "updAuth", payload}
 }
 export function entryPush(payload){
   return { type: "enPush", payload}

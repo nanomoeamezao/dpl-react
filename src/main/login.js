@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Auth from "../modules/auth";
+import {updAuth} from "../reducers/red"
+import { connect } from "react-redux";
 
+function mapDispatchToProps(dispatch){
+    return {
+        updAuth: payload => dispatch(updAuth(payload))
+    }
+}
 const RedirErr = (props) =>(
 <p>{String(props["err"])}</p>
 )
@@ -25,6 +32,7 @@ function Login(props) {
             .then((resp) => {
                 if (resp.success) {
                     Auth.authenticateUser(resp.token);
+                    props.updAuth({authenticated: true})
                     history.push("/");
                 } else {
                     const errors = resp.errors ? resp.errors : {};
@@ -56,4 +64,4 @@ function Login(props) {
     );
 }
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

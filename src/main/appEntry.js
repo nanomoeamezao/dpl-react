@@ -34,7 +34,7 @@ class ConnectedAppEntry extends Component{
         this.setState({logs: data});
     };
 
-    componentDidMount(props){
+    componentDidMount(){
         socket.emit("reqApp", this.props.match.params.id);
         socket.on("resApp", this.loadApp);
         socket.on("logsUpdate", this.logsUpdate);
