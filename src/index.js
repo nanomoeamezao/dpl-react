@@ -6,9 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import rootReducer from "./reducers/red.js";
-const store = createStore(rootReducer);
+import store from "./store"
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>

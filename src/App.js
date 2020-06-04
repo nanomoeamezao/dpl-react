@@ -9,7 +9,8 @@ import AppEntry from "./main/appEntry";
 import Login from "./main/login";
 import Auth from "./modules/auth";
 import LogoutFunc from "./main/logoutFunc";
-
+import store from "./store"
+import { updAuth } from "./reducers/red";
 const RouteAuthenticated = ({ component: Component, path }) => {
     if (!Auth.isUserAuthenticated()) {
         return <Redirect to={{ pathname: "/login", state: { err: "You cant visit that page without logging in." } }} />;
@@ -17,6 +18,10 @@ const RouteAuthenticated = ({ component: Component, path }) => {
 
     return <Route component={Component} path={path} />;
 };
+
+if (localStorage.token){
+    store.dispatch(updAuth({ authenticated: true }))
+}
 
 class App extends Component {
     render() {

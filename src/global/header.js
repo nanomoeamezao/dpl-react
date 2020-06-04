@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import { Navbar, Nav, NavItem } from "reactstrap";
-import Auth from "../modules/auth.js";
 import {connect } from "react-redux"
 
 const mapStateToProps = state =>{
