@@ -19,6 +19,9 @@ function connectDatabase() {
         var query2 = db.query("CREATE TABLE IF NOT EXISTS logs(id int, message VARCHAR(45), date VARCHAR(45))", (err, res, f)=>{
             if (err) throw err;
         });
+        var query3 = db.query("CREATE TABLE IF NOT EXISTS users(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(45), password VARCHAR(45))", (err, res, f)=>{
+            if (err) throw err;
+        });
     }
     return db;
 }
@@ -62,7 +65,13 @@ function getApp(id, callback){
         db.query("SELECT message, date FROM logs WHERE id = ?", [id], (err, logs, f)=>{
             callback([data, logs]);
         });
+    })
+}
 
+function getUser(name, callback){
+    db.query("SELECT * FROM users WHERE name = ?", [name], (err,data,f)=>{
+        if (err) throw err;
+        callback(err, data[0]);
     })
 }
 
@@ -88,3 +97,4 @@ module.exports.getApp = getApp;
 module.exports.updateStatus = updateStatus;
 module.exports.getLogs = getLogs;
 module.exports.insertLog = insertLog;
+module.exports.getUser = getUser;
