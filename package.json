@@ -36,19 +36,7 @@
         "server": "nodemon server",
         "dev": "run-p server reactstart"
     },
-    "eslintConfig": {
-        "env": {
-            "commonjs": true,
-            "es6": true,
-            "node": true
-        },
-        "extends": [
-            "react-app",
-            "plugin:prettier/recommended",
-            "eslint-recommended"
-        ]
-    },
-    "browserslist": {
+        "browserslist": {
         "production": [
             ">0.2%",
             "not dead",
@@ -59,5 +47,9 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "eslint": "^7.2.0",
+        "eslint-plugin-react": "^7.20.0"
     }
 }
