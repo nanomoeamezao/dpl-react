@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import socketIOClient from "socket.io-client";
-import { Navbar, Nav, NavItem } from "reactstrap";
-import {connect } from "react-redux"
+import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
+import socketIOClient from 'socket.io-client'
+import { Navbar, Nav, NavItem } from 'reactstrap'
+import { connect } from 'react-redux'
 
-const mapStateToProps = state =>{
-    return {authenticated: state.authReducer.authenticated}
+const mapStateToProps = (state) => {
+    return { authenticated: state.authReducer.authenticated }
 }
 
-var socket;
+var socket
 class ConHeader extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            endpoint: "http://localhost:3001/"
-        };
-        socket = socketIOClient();
+            endpoint: 'http://localhost:3001/',
+        }
+        socket = socketIOClient()
     }
 
     render() {
@@ -55,8 +55,8 @@ class ConHeader extends Component {
                     </Nav>
                 </Navbar>
             </header>
-        );
+        )
     }
 }
 const Header = connect(mapStateToProps)(ConHeader)
-export { Header, socket };
+export { Header, socket }
